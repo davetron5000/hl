@@ -51,6 +51,11 @@ Highlight the word "user_id" in bright cyan in several files
 
     hl --color=cyan -b user_id some_file some_other_file yet_a_third_file
 
+## BUGS
+
+  * Does not use regular expressions
+  * Does not allow for highlighting multiple terms at once
+
 ## AUTHOR
 
 David Copeland, davec (at) naildrivin5.com
