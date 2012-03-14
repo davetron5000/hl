@@ -34,7 +34,7 @@ end
 
 task :man do 
   sh 'ronn man/hl.1.ronn'
-  mv 'man/hl.1.html','README.html'
+  cp 'man/hl.1.ronn','README.md'
 end
 CLEAN << 'man/hl.1'
 CLEAN << 'man/hl.1.html'
