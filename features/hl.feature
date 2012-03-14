@@ -9,13 +9,15 @@ Feature: My bootstrapped app kinda works
     And the banner should be present
     And the banner should document that this app takes options
     And the following options should be documented:
-      |--version |
-      |--color   |
-      |-c        |
-      |--bright  |
-      |-b        |
-      |--inverse |
-      |-i        |
+      |--version   |
+      |--color     |
+      |-c          |
+      |--bright    |
+      |-b          |
+      |--inverse   |
+      |-i          |
+      |--underline |
+      |-u          |
 
     And the banner should document that this app's arguments are:
       |search_term|which is required|
@@ -25,6 +27,14 @@ Feature: My bootstrapped app kinda works
     Given a file named "test_file" with the word "foo" in it
     When I successfully run `hl foo ../../test_file`
     Then the entire contents of "test_file" should be output
+    But the word "foo" should be highlighted in yellow
+
+  Scenario: Highlights stuff in yellow by default using multiple files
+    Given a file named "test_file" with the word "foo" in it
+    And a file named "test_file2" with the word "foobar" in it
+    When I successfully run `hl foo ../../test_file ../../test_file2`
+    Then the entire contents of "test_file" should be output
+    Then the entire contents of "test_file2" should be output
     But the word "foo" should be highlighted in yellow
 
   Scenario: Highlights from stdin if no file is given
@@ -39,8 +49,8 @@ Feature: My bootstrapped app kinda works
     Then the entire contents of "test_file" should be output
     But the word "foo" should be highlighted in blue
 
-  Scenario: Highlights stuff in bright, inverted cyan if requested
+  Scenario: Highlights stuff in bright, inverted, underlined cyan if requested
     Given a file named "test_file" with the word "foo" in it
-    When I successfully run `hl --color blue -bi foo ../../test_file`
+    When I successfully run `hl --color blue -bui foo ../../test_file`
     Then the entire contents of "test_file" should be output
-    But the word "foo" should be highlighted in bright inverted blue
+    But the word "foo" should be highlighted in bright inverted underlined blue

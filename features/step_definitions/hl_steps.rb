@@ -2,7 +2,7 @@ require 'rainbow'
 Sickill::Rainbow.enabled = true
 CONTENTS = [
   'This is the first line',
-  'This is the second line and %{keyword} it contarins the search term',
+  'This is the second line and %{keyword} it contains the search term',
   'This is the last line',
 ]
 Given /^a file named "([^"]*)" with the word "([^"]*)" in it$/ do |filename, keyword|
@@ -16,8 +16,8 @@ Then /^the entire contents of "([^"]*)" should be output$/ do |file|
 end
 
 Then /^the word "([^"]*)" should be highlighted in (.*$)$/ do |keyword,color|
-  if color == 'bright inverted blue'
-    expected = keyword.color(:blue).inverse.bright
+  if color == 'bright inverted underlined blue'
+    expected = keyword.color(:blue).inverse.bright.underline
   else
     expected = keyword.color(color.to_sym)
   end
