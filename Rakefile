@@ -33,8 +33,8 @@ Rake::RDocTask.new do |rd|
 end
 
 task :man do 
-  sh 'ronn man/hl.1.ronn'
-  cp 'man/hl.1.ronn','README.md'
+  sh 'ronn --markdown --roff man/hl.1.ronn'
+  mv 'man/hl.1.markdown','README.md'
 end
 CLEAN << 'man/hl.1'
 CLEAN << 'man/hl.1.html'

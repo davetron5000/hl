@@ -67,3 +67,18 @@ hl is copyright(c) 2012 by David Copeland, released under the Apache license.
 ## SEE ALSO
 
   * Source on github: https://github.com/davetron5000/hl
+
+
+[SYNOPSIS]: #SYNOPSIS "SYNOPSIS"
+[INSTALL]: #INSTALL "INSTALL"
+[DESCRIPTION]: #DESCRIPTION "DESCRIPTION"
+[OPTIONS]: #OPTIONS "OPTIONS"
+[ENVIRONMENT]: #ENVIRONMENT "ENVIRONMENT"
+[EXAMPLES]: #EXAMPLES "EXAMPLES"
+[BUGS]: #BUGS "BUGS"
+[AUTHOR]: #AUTHOR "AUTHOR"
+[COPYRIGHT]: #COPYRIGHT "COPYRIGHT"
+[SEE ALSO]: #SEE-ALSO "SEE ALSO"
+
+
+[hl(1)]: hl.1.html
