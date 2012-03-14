@@ -8,6 +8,10 @@ hl(1) -- Highlight text in an output stream or file
 `hl --color=blue --inverse --underline --bright term file1 file2`
 `hl -c cyan -iub term file1 file2`
 
+## INSTALL
+
+    $ gem install hl
+
 ## DESCRIPTION
 
 **hl** is a command-line tool for highlighting text in an output stream or file, to assist in visually scanning such output.  The most common use-case is when trying to scan the output of a `grep` that has complex data or long lines.  In this case, you don't want to further grep the output for the term you're looking for, bit instead simply need a visual cue as to where the secondary search term is in the output.
@@ -49,4 +53,9 @@ Highlight the word "user_id" in bright cyan in several files
 David Copeland, davec (at) naildrivin5.com
 
 ## COPYRIGHT
+
 hl is copyright(c) 2012 by David Copeland, released under the Apache license.
+
+## SEE ALSO
+
+  * Source on github: https://github.com/davetron5000/hl

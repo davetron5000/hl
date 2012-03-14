@@ -5,8 +5,12 @@ require 'cucumber'
 require 'cucumber/rake/task'
 gem 'rdoc' # we need the installed RDoc gem, not the system one
 require 'rdoc/task'
+require 'methadone'
+require 'fileutils'
 
 include Rake::DSL
+include Methadone::SH
+include FileUtils
 
 Bundler::GemHelper.install_tasks
 
@@ -28,4 +32,11 @@ Rake::RDocTask.new do |rd|
   rd.rdoc_files.include("README.rdoc","lib/**/*.rb","bin/**/*")
 end
 
-task :default => [:test,:features]
+task :man do 
+  sh 'ronn man/hl.1.ronn'
+  mv 'man/hl.1.html','README.html'
+end
+CLEAN << 'man/hl.1'
+CLEAN << 'man/hl.1.html'
+
+task :default => [:test,:features,:man]

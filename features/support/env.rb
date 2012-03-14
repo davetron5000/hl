@@ -1,5 +1,6 @@
 require 'aruba/cucumber'
 require 'methadone/cucumber'
+require 'fileutils'
 
 ENV['PATH'] = "#{File.expand_path(File.dirname(__FILE__) + '/../../bin')}#{File::PATH_SEPARATOR}#{ENV['PATH']}"
 LIB_DIR = File.join(File.expand_path(File.dirname(__FILE__)),'..','..','lib')
@@ -13,4 +14,7 @@ end
 
 After do
   ENV['RUBYLIB'] = @original_rubylib
+  %w(test_file test_file2).each do |filename|
+    FileUtils.rm filename if File.exist? filename
+  end
 end
