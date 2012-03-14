@@ -1,0 +1,52 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'methadone'
+require 'rainbow'
+require 'hl'
+
+class App
+  include Methadone::Main
+  include Methadone::CLILogging
+
+  main do |keyword,filename|
+  begin
+    Sickill::Rainbow.enabled = true
+    keyword = keyword.dup
+    color = options['color'].to_sym
+    file = if filename.nil?
+             STDIN
+           else
+             File.open(filename)
+           end
+
+    expected_highlight = keyword.color(color)
+    expected_highlight = expected_highlight.inverse if options[:inverse]
+    expected_highlight = expected_highlight.bright if options[:bright]
+
+    file.readlines.map { |_| _.clone.gsub(keyword,expected_highlight) }.each do |line|
+      puts line
+    end
+  ensure
+    file.close
+  end
+  end
+
+  description "Highlight terms in output without grepping out lines"
+
+  options[:color] = 'yellow'
+  colors = ['red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']
+  on("-c COLOR","--color","Color to use for highlighting",colors,"(#{colors.join('|')})")
+  on("--bright","-b","Use bright colors")
+  on("--inverse","-i","Inverse highlight")
+
+  arg :search_term, :required
+  arg :filename, :optional
+
+
+  version Hl::VERSION
+
+  use_log_level_option
+
+  go!
+end
