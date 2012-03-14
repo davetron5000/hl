@@ -47,7 +47,7 @@ class App
 
   version Hl::VERSION
 
-  use_log_level_option
+  defaults_from_env_var 'HL_OPTS'
 
   go!
 end
