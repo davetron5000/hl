@@ -4,8 +4,11 @@ hl(1) -- Highlight text in an output stream or file
 ## SYNOPSIS
 
 `grep term file | hl other_term` 
+
 `hl term file1 file2`
+
 `hl --color=blue --inverse --underline --bright term file1 file2`
+
 `hl -c cyan -iub term file1 file2`
 
 ## INSTALL
