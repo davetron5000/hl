@@ -1,5 +1,2 @@
-require "hl/version"
-
-module Hl
-  # Your code goes here...
-end
+require 'hl/highlighter'
+require 'hl/version'

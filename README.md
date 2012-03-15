@@ -3,13 +3,9 @@ hl(1) -- Highlight text in an output stream or file
 
 ## SYNOPSIS
 
-`grep term file | hl other_term` 
+`hl [options] PATTERN [FILE...]`
 
-`hl term file1 file2`
-
-`hl --color=blue --inverse --underline --bright term file1 file2`
-
-`hl -c cyan -iub term file1 file2`
+`hl [options] -p PATTERN [FILE...]`
 
 ## INSTALL
 
@@ -17,7 +13,9 @@ hl(1) -- Highlight text in an output stream or file
 
 ## DESCRIPTION
 
-**hl** is a command-line tool for highlighting text in an output stream or file, to assist in visually scanning such output.  The most common use-case is when trying to scan the output of a `grep` that has complex data or long lines.  In this case, you don't want to further grep the output for the term you're looking for, bit instead simply need a visual cue as to where the secondary search term is in the output.
+**hl** higlights (using ANSI escape sequences) instances of _PATTERN_ in the named input _FILEs_ or standard in if none are specified. **hl**'s goal is to assist visually scanning such output, but without trimming that output as `grep(1)` would.  The most common use-case is when trying to scan the output of a `grep` invocation that has complex data or long lines.  In this case, you don't want to further grep the output for the term you're looking for, bit instead simply need a visual cue as to where the secondary search term is in the output.
+
+_PATTERN_ can be a plain string, or a regular expression.
 
 ## OPTIONS
 
@@ -25,21 +23,28 @@ hl(1) -- Highlight text in an output stream or file
     Color to use for highlighting.  Available colors are red, green, yellow, blue, magenta, cyan, or white,
     with yellow being the default.
 
-  * `-i`, `--inverse`:
-    Inverse highlight.  Shows the highlighting in inverse, with the background of the highlight being the selected color and the foreground being the color of your terminal's background.
+  * `-n`, `--[no-]inverse`:
+    Inverse highlight.  Shows the highlighting in inverse, with the background of the highlight being the selected color and the foreground being the color of your terminal's background.  This is off by default
 
-  * `-u`, `--underline`:
-    Underline highlight.
+  * `-i`, `--[no-]ignore-case`:
+    Ignore case when matching.  This is off by default.
 
-  * `-b`, `--bright`:
-    Use bright colors.  Shows the highlighting using the bright version of the color.
+  * `-u`, `--[no-]underline`:
+    Underline highlight.  This is off by default.
+
+  * `-b`, `--[no-]bright`:
+    Use bright colors.  Shows the highlighting using the bright version of the color.  This is off by default.
+
+  * `-p PATTERN`, `--regexp=PATTERN`:
+    Search term as explicit option.  This is useful for searching for patterns that start with a dash.
 
   * `-h`, `--help`, `--version`:
     Show the version and help information
 
 ## ENVIRONMENT
 
-Default options can be specified in the `HL_OPTS` environment variable, exactly as they would appear on the command line.
+Default options can be specified in the `HL_OPTS` environment variable, exactly as they would appear on the command line.  You
+can override these switches with the `-no-` form of the options
 
 ## EXAMPLES
 
@@ -53,7 +58,6 @@ Highlight the word "user_id" in bright cyan in several files
 
 ## BUGS
 
-  * Does not use regular expressions
   * Does not allow for highlighting multiple terms at once
 
 ## AUTHOR

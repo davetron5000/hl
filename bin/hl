@@ -2,7 +2,6 @@
 
 require 'optparse'
 require 'methadone'
-require 'rainbow'
 require 'hl'
 
 class App
@@ -10,27 +9,17 @@ class App
   include Methadone::CLILogging
 
   main do |keyword,*filenames|
-    begin
-      Sickill::Rainbow.enabled = true
-      keyword = keyword.dup
-      color = options['color'].to_sym
-      files = if filenames.empty?
-                [STDIN]
-              else
-                filenames.map { |_| File.open(_) }
-              end
-
-      expected_highlight = keyword.color(color)
-      expected_highlight = expected_highlight.inverse if options[:inverse]
-      expected_highlight = expected_highlight.bright if options[:bright]
-      expected_highlight = expected_highlight.underline if options[:underline]
-
-      files.map { |_| _.readlines}.flatten.map { |_| _.clone.gsub(keyword,expected_highlight) }.each do |line|
-        puts line
-      end
-    ensure
-      files && files.map(&:close)
+    if options[:regexp]
+      Array(filenames).unshift(keyword)
+      keyword = options[:regexp]
     end
+
+    exit_now! 'search term or --regexp/-p required' if keyword.nil?
+
+    keyword = keyword.dup
+    highlighter = Hl::Highlighter.new(options)
+
+    puts highlighter.highlight(filenames,keyword)
   end
 
   description "Highlight terms in output without grepping out lines"
@@ -38,11 +27,13 @@ class App
   options[:color] = 'yellow'
   colors = ['red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']
   on("-c COLOR","--color","Color to use for highlighting",colors,"(#{colors.join('|')})")
-  on("--bright","-b","Use bright colors")
-  on("--inverse","-i","Inverse highlight")
-  on("--underline","-u","Underline highlight")
+  on("--[no-]bright","-b","Use bright colors")
+  on("--[no-]inverse","-n","Inverse highlight")
+  on("--[no-]underline","-u","Underline highlight")
+  on("--regexp PATTERN","-p","Search term as explicit option")
+  on("--[no-]ignore-case","-i","Ignore case in match")
 
-  arg :search_term, :required
+  arg :search_term, :optional
   arg :filename, :optional
 
   version Hl::VERSION

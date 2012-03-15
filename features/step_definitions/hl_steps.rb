@@ -24,6 +24,11 @@ Then /^the word "([^"]*)" should be highlighted in (.*$)$/ do |keyword,color|
   assert_partial_output(expected,all_stdout)
 end
 
+Then /^the word "([^"]*)" should be highlighted both times in (.*$)$/ do |keyword,color|
+  expected = keyword.color(color.to_sym)
+  all_stdout.should match /#{Regexp.escape(expected)}.*#{Regexp.escape(expected)}/
+end
+
 Then /^I type some text containing "([^"]*)"$/ do |keyword|
   @contents_without_ansi = CONTENTS.map { |line| line.gsub('%{keyword}','>>=').split('>>=') }.flatten
   contents = CONTENTS.map { |line| line % { :keyword => keyword } }
@@ -35,4 +40,8 @@ end
 
 Then /^the contents of what I typed should be output$/ do
   @contents_without_ansi.each { |_| assert_partial_output(_,all_stdout) }
+end
+
+Then /^I should see the help output$/ do
+  step %{the banner should be present}
 end
