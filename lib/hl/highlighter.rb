@@ -24,7 +24,7 @@ module Hl
 
         regexp = Regexp.new(keyword,@options['ignore-case'] ? Regexp::IGNORECASE : nil)
 
-        files.map { |_| _.readlines}.flatten.map { |_| highlight_matches(regexp,_) }.join("\n")
+        files.map { |_| _.readlines}.flatten.map { |_| highlight_matches(regexp,_) }.join("")
       ensure
         files && files.map(&:close)
       end
