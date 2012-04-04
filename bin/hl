@@ -8,18 +8,12 @@ class App
   include Methadone::Main
   include Methadone::CLILogging
 
-  main do |keyword,*filenames|
-    if options[:regexp]
-      Array(filenames).unshift(keyword)
-      keyword = options[:regexp]
-    end
+  main do
+    keyword = options[:regexp] || ARGV.shift
 
     exit_now! 'search term or --regexp/-p required' if keyword.nil?
 
-    keyword = keyword.dup
-    highlighter = Hl::Highlighter.new(options)
-
-    puts highlighter.highlight(filenames,keyword)
+    Hl::Highlighter.new(options).highlight(keyword.dup)
   end
 
   description "Highlight terms in output without grepping out lines"

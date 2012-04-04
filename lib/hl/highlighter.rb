@@ -11,22 +11,12 @@ module Hl
       @options = options
     end
 
-    # Returns a string containing the highlighted text from the given files or
-    # STDIN if filenames is empty
-    def highlight(filenames,keyword)
+    # Highlights ARGF's contents, outputing each line as it comes in
+    def highlight(keyword)
       Sickill::Rainbow.enabled = true
-      files = if filenames.empty?
-                [STDIN]
-              else
-                filenames.map { |_| File.open(_) }
-              end
-      begin
-
-        regexp = Regexp.new(keyword,@options['ignore-case'] ? Regexp::IGNORECASE : nil)
-
-        files.map { |_| _.readlines}.flatten.map { |_| highlight_matches(regexp,_) }.join("")
-      ensure
-        files && files.map(&:close)
+      regexp = Regexp.new(keyword,@options['ignore-case'] ? Regexp::IGNORECASE : nil)
+      ARGF.lines.each do |line|
+        puts highlight_matches(regexp,line)
       end
     end
 
