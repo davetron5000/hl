@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency('ronn')
   s.add_development_dependency('aruba')
   s.add_development_dependency('rake','~> 0.9.2')
-  s.add_dependency('methadone', '~>1.0.0.rc5')
-  s.add_dependency('rainbow')
+  s.add_dependency('methadone', '~>1.0')
+  s.add_dependency('rainbow', '~> 2.0')
   s.add_dependency('gem-man')
 end

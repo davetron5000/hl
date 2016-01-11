@@ -13,9 +13,9 @@ module Hl
 
     # Highlights ARGF's contents, outputing each line as it comes in
     def highlight(keyword)
-      Sickill::Rainbow.enabled = true
+      Rainbow.enabled = true
       regexp = Regexp.new(keyword,@options['ignore-case'] ? Regexp::IGNORECASE : nil)
-      ARGF.lines.each do |line|
+      ARGF.each_line do |line|
         puts highlight_matches(regexp,line)
       end
     end
@@ -33,10 +33,10 @@ module Hl
     end
 
     def highlight_string(string)
-      string = string.color(@options['color'].to_sym)
-      string = string.inverse if @options[:inverse]
-      string = string.bright if @options[:bright]
-      string = string.underline if @options[:underline]
+      string = Rainbow(string).color(@options['color'].to_sym)
+      string = Rainbow(string).inverse if @options[:inverse]
+      string = Rainbow(string).bright if @options[:bright]
+      string = Rainbow(string).underline if @options[:underline]
       string
     end
 
