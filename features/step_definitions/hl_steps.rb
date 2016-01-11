@@ -17,15 +17,15 @@ end
 
 Then /^the word "([^"]*)" should be highlighted in (.*$)$/ do |keyword,color|
   if color == 'bright inverted underlined blue'
-    expected = keyword.color(:blue).inverse.bright.underline
+    expected = Rainbow(keyword).color(:blue).inverse.bright.underline
   else
-    expected = keyword.color(color.to_sym)
+    expected = Rainbow(keyword).color(color.to_sym)
   end
   assert_partial_output(expected,all_stdout)
 end
 
 Then /^the word "([^"]*)" should be highlighted both times in (.*$)$/ do |keyword,color|
-  expected = keyword.color(color.to_sym)
+  expected = Rainbow(keyword).color(color.to_sym)
   all_stdout.should match /#{Regexp.escape(expected)}.*#{Regexp.escape(expected)}/
 end
 
